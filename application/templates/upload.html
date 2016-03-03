@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block div %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Flask Multiple Upload</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+
+<div class="container">
+  <div class="form-audio">
+<form id="upload-form" class='upload' action="{{ url_for('uploads') }}" method="POST" enctype="multipart/form-data">
+
+    <strong>Files:</strong><br>
+    Select files OR drag them into the box below.
+    <button class="btn btn-danger"><input id="file-picker" type='file' name="file" class="btn btn-danger" multiple></button>
+
+    <div id="dropbox">
+        Drag and Drop Files Here
+    </div><p>
+
+    <fieldset id="progress" style="display: none">
+        <legend>Files Progress</legend>
+
+        <div class="progress-trough">
+            <div id="progress-bar" class="progress-bar">0%</div>
+        </div>
+    </fieldset><p>
+
+    <input type="submit" class="btn btn-danger" id="upload-button">
+</form>
+</div>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.2.0.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/uploadr.js') }}"></script>
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block play %}
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="input-group">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+      <input type="text" class="form-control" placeholder="Search for mp3 and mp4...">
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+  <div class="col-lg-6">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search for other files...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+
+
+<div class="page-header">
+  <h1>File list</h1>
+</div>
+<div class="row">
+
+
+
+
+
+  <div class="col-sm-4">
+    <div class="list-group">
+      <ul>
+      <li href="#" class="list-group-item active">
+
+        play files here
+        {{ music_files }}
+      </li>
+      <iframe width='391px' height='450px' controls autoplay>
+        <source src="static/files/{{ music_files[1] }}" type="audio/mp3">
+      </iframe>
+
+    </ul>
+    </div>
+    </div><!-- /.col-sm-4 -->
+
+
+
+
+
+<div class="col-sm-4">
+  <ul>
+    <li class="list-group-item active">Mp3</li>
+    {% for i in range(music_files_number) %}
+      <a href="javascript:void();" class="list-group-item" onclick="playsong( '{{ music_files[i] }}' )">{{ music_files[i] }}</a></li>
+      <!-- <p> <a href="javascript:void();" class='btn' onclick="playsong( '{{ music_video[i] }}' )"> {{ music_video[i] }}</a></p> -->
+      {% endfor %}
+
+
+  </ul>
+</div><!-- /.col-sm-4 -->
+
+
+<div class="col-sm-4">
+  <div class="list-group">
+    <ul>
+    <li href="#" class="list-group-item active">
+      mp4
+    </li>
+    {% for i in range(music_video_number) %}
+    <a href="javascript:void();" class="list-group-item" onclick="playsong( '{{ music_video[i] }}' )"> {{ music_video[i] }}</a>
+    {% endfor %}
+  </ul>
+  </div>
+</div><!-- /.col-sm-4 -->
+
+
+
+</div>
+
+
+
+
+<!--page two-->
+
+
+
+<div class="page-header">
+  <h1>Other files</h1>
+</div>
+<div class="row">
+<div class="col-sm-4">
+  <ul>
+    <li class="list-group-item active">photos</li>
+    {% for i in range(music_files_number) %}
+      <a href="javascript:void();" class="list-group-item" onclick="playsong( '{{ photo_file[i] }}' )">{{ photo_file[i] }}</a></li>
+      <!-- <p> <a href="javascript:void();" class='btn' onclick="playsong( '{{ music_video[i] }}' )"> {{ music_video[i] }}</a></p> -->
+      {% endfor %}
+
+
+  </ul>
+</div><!-- /.col-sm-4 -->
+
+
+<div class="col-sm-4">
+  <div class="list-group">
+    <ul>
+    <li href="#" class="list-group-item active">
+      pdfs
+    </li>
+    {% for i in range(music_files_number) %}
+    <a href="javascript:void();" class="list-group-item" onclick="playsong( '{{ pdf_file[i] }}' )"> {{ pdf_file[i] }}</a>
+    {% endfor %}
+  </ul>
+  </div>
+</div><!-- /.col-sm-4 -->
+
+<div class="col-sm-4">
+  <div class="list-group">
+    <ul>
+    <li href="#" class="list-group-item active">
+      Others
+    </li>
+    {% for i in range(music_files_number) %}
+    <a href="javascript:void();" class="list-group-item" onclick="playsong( '{{ photo_file_png[i] }}' )"> {{ photo_file_png[i] }}</a>
+    {% endfor %}
+
+
+  </ul>
+  </div>
+  </div><!-- /.col-sm-4 -->
+
+
+</div>
+
+
+
+
+<script src="{{ url_for('static',filename='js/jquery-2.2.0.js') }}">  </script>
+<!---java script to play music file if clicked -->
+<script>
+  function playsong(song) {
+    $('iframe').attr('src','static/files/'+song);
+
+  }
+</script>
+  {% endblock %}

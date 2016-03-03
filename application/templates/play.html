@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block play %}
+
+<div class="container">
+<div id="player1" class="aplayer"></div>
+</div>
+
+<div class="page-header">
+  <h1>list of songs</h1>
+
+
+    {% for i in range(music_files_number) %}
+<p>    <a href="javascript:void();" class="list-group-item" onclick="playsong( '{{ music_files[i] }}' )">{{ music_files[i] }} </a></p>
+    {% endfor %}
+
+
+<script src="{{ url_for('static',filename='js/APlayer.min.js') }}"></script>
+<script>
+
+    var ap1 = new APlayer({
+        element: document.getElementById('player1'),
+        narrow: false,
+        autoplay: true,
+        showlrc: false,
+        theme: '#e6d0b2',
+        music: {
+            title: '{{ music_files[1] }}',
+            author: 'unkown',
+            url: 'static/files/{{ music_files[1] }}',
+            pic: 'static/images/preview.png'
+        }
+    });
+    ap1.init();
+
+
+</script>
+
+<script>
+function playsong(song) {
+  $('player1').attr('src','static/files/'+song);
+
+}
+</script>
+  {% endblock %}
+  <!-- Bootstrap core CSS -->
