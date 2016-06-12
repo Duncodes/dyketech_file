@@ -24,7 +24,7 @@ SECRET_KEY = 'you-will-never-guess'
 app.config['SECRET_KEY'] = 'spodifuyggdjkslfjihugweyftshdjkflnkjgfehgudiyegvcbhjv'
 app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:duncan@localhost/myfilesers'
 
-#app.config['DATA']='/home/duncan/databases'
+app.config['DATA']='/tmp/databases'
 
 db = SQLAlchemy(app)
 
@@ -46,9 +46,9 @@ def allowed_file(filename):
 
 
 
-music_dir='/home/duncan/Documents/static/music'
-music_dir='/home/duncan/Documents/Music_option/application/static/files'
-music_readvideo='/home/duncan/Videos/Music videos'
+music_dir=''
+music_dir='/home/duncan/Documents/code/python/dyketech_file/application/static/files'
+music_readvideo='/home/duncan/Documents/code/python/dyketech_file/application/static/files'
 
 
 class Users(db.Model):
