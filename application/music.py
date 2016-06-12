@@ -46,7 +46,7 @@ def allowed_file(filename):
 
 
 
-music_dir='/home/duncan/Documents/Music_option/application/static/music'
+music_dir='/home/duncan/Documents/static/music'
 music_dir='/home/duncan/Documents/Music_option/application/static/files'
 music_readvideo='/home/duncan/Videos/Music videos'
 
