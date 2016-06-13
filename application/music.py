@@ -1,5 +1,5 @@
 from application import app
-from flask import render_template,request,redirect,session,url_for,json
+from flask import render_template,request,redirect,session,url_for,json,flash
 from werkzeug.utils import secure_filename
 import os
 from flask.ext.wtf import Form
@@ -8,7 +8,8 @@ from wtforms.validators import DataRequired,Required,Email,Length,EqualTo
 from flask.ext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_bootstrap import Bootstrap
+from flask.ext.login import LoginManager, UserMixin, login_required
 
 
 
@@ -22,19 +23,29 @@ WTF_CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
 
 app.config['SECRET_KEY'] = 'spodifuyggdjkslfjihugweyftshdjkflnkjgfehgudiyegvcbhjv'
-app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:duncan@localhost/myfilesers'
+app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:duncan@localhost/users'
 
 app.config['DATA']='/tmp/databases'
 
+# MySQL configurations
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_DB'] = 'users'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+mysql.init_app(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 db = SQLAlchemy(app)
 
-
-
+Bootstrap(app)
 name="Login/register"
 
 
 
-
+def init_db():
+    db.create_all()
 
 
 
@@ -47,6 +58,7 @@ def allowed_file(filename):
 music_dir=''
 music_dir='/home/duncan/Documents/code/python/dyketech_file/application/static/files'
 music_readvideo='/home/duncan/Documents/code/python/dyketech_file/application/static/files'
+
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
@@ -56,7 +68,8 @@ class Users(db.Model):
     def __init__(self,name,email,passwd):
         self.name = name
         self.email = email
-        self.password = hash_pass(passwd)
+        self.email = email
+        #self.password = hash_pass(passwd)
 
 class Register(Form):
     name = StringField('Name', validators=[Required()])
@@ -84,33 +97,38 @@ def login():
     formlogin = Login()
     if request.method == 'POST':
         if formlogin.validate_on_submit():
-            if formlogin.Email.data != "duncan@gmail.com":
-                error = 'Invalid username'
-            elif formlogin.Password != "password":
-                error = 'Invalid username'
+            userdata=Users.query.filter_by(email=formlogin.email.data).first_or_404();
+            if formlogin.email.data == userdata.email and userdata.password:
+                flash('you are logged in')
+                return redirect(url_for('index'))
             else:
-                session[ logged_in ] = True
-                flash( 'You were logged in' )
-                return redirect(url_for( index ))
+                flash(userdata.email)
+                flash('Incorect username')
+                return render_template('login.html',form=formlogin,error=error)
     return render_template('login.html',form=formlogin,error=error)
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect('index.html')
 
 @app.route('/register', methods=['GET','POST'])
 def register():
     formregister=Register()
     if request.method == "GET":
         return render_template('register.html', form=formregister)
-
     elif request.method == "POST":
         if formregister.validate_on_submit():
             name = formregister.name.data
             email  = formregister.email.data
             password = formregister.password.data
-            kamau = Users(name,email,password)
-            db.session.add(kamau)
+            user= Users(name,email,password)
+            db.session.add(user)
             db.session.commit()
-
+            init_db()
             return redirect(url_for('login'))
-
         else:
             return render_template('register.html' ,form=formregister)
 
@@ -194,8 +212,6 @@ def song():
         return render_template('error.html')
     return render_template("play.html",music_files_number=music_files_number,
                                           music_files=music_files)
-
-
 
 
 

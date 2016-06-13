@@ -7,7 +7,9 @@
     <h1>Dyketech personal cloud</h1>
 </div>
 
-<div class="jumbotron">
+{% if current_user.is_authenticated %}
+  Hi {{ current_user.name }}!
+  {% endif %}<div class="jumbotron">
   <h1>Welcome to Dyketech Personal cloud</h1>
   <p>Dyketech Personal cloud is an online serves tha allows you to upload , play and download your files,Get started and sign up today</p>
   <a href="register" type="button" class="btn btn-success">Sign Up</a>
