@@ -44,13 +44,9 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
-
-
 music_dir=''
 music_dir='/home/duncan/Documents/code/python/dyketech_file/application/static/files'
 music_readvideo='/home/duncan/Documents/code/python/dyketech_file/application/static/files'
-
-
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
@@ -162,15 +158,17 @@ def uploads():
 
 @app.route('/myfiles')
 def myfiles():
-    music_files=[f for f in os.listdir(music_dir) if f.endswith('mp3')]
-    music_video=[f for f in os.listdir(music_dir) if f.endswith('mp4')]
-    photo_file=[f for f in os.listdir(music_dir) if f.endswith('jpg')]
-    pdf_file=[f for f in os.listdir(music_dir) if f.endswith('pdf')]
-    photo_file_png=[f for f in os.listdir(music_dir) if f.endswith('png')]
+    try:
+        music_files=[f for f in os.listdir(music_dir) if f.endswith('mp3')]
+        music_video=[f for f in os.listdir(music_dir) if f.endswith('mp4')]
+        photo_file=[f for f in os.listdir(music_dir) if f.endswith('jpg')]
+        pdf_file=[f for f in os.listdir(music_dir) if f.endswith('pdf')]
+        photo_file_png=[f for f in os.listdir(music_dir) if f.endswith('png')]
+        music_files_number=len(music_files)
+        music_video_number=len(music_video)
 
-    music_files_number=len(music_files)
-    music_video_number=len(music_video)
-
+    except OSError:
+        return render_template('error.html')
     return render_template("myfiles.html",music_files_number=music_files_number,
                                           music_video_number=music_video_number,
                                           music_files=music_files,
@@ -188,12 +186,16 @@ def myfiles():
 
 @app.route('/song')
 def song():
-    music_files=[f for f in os.listdir(music_dir) if f.endswith('mp3')]
-    music_files=[f for f in os.listdir(music_dir) if f.endswith('mp4')]
-    music_files_number=len(music_files)
-
+    try:
+        music_files=[f for f in os.listdir(music_dir) if f.endswith('mp3')]
+        music_files=[f for f in os.listdir(music_dir) if f.endswith('mp4')]
+        music_files_number=len(music_files)
+    except OSError:
+        return render_template('error.html')
     return render_template("play.html",music_files_number=music_files_number,
                                           music_files=music_files)
+
+
 
 
 

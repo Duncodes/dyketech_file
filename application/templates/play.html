@@ -13,7 +13,6 @@
 <p>    <a href="javascript:void();" class="list-group-item" onclick="playsong( '{{ music_files[i] }}' )">{{ music_files[i] }} </a></p>
     {% endfor %}
 
-
 <script src="{{ url_for('static',filename='js/APlayer.min.js') }}"></script>
 <script>
 
@@ -26,7 +25,7 @@
         music: {
             title: '{{ music_files[1] }}',
             author: 'unkown',
-            url: 'static/files/{{ music_files[1] }}',
+            url: '[static/files/Ariana.mp4],static/file/',
             pic: 'static/images/preview.png'
         }
     });
