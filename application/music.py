@@ -216,6 +216,11 @@ def song():
 
 
 
+@app.route("/video")
+def video():
+    videos=[f for f in os.listdir(music_dir) if f.endswith('mp4')]
+    file_numbers=len(videos)
+    return render_template("yendifplayer/index.html",file_numbers=file_numbers,videos=videos)
 
 def ajax_response(status, msg):
     status_code = "ok" if status else "error"

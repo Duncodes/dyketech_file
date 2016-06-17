@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yendif! Video Player</title>
+<!--******************************************************************************************-->
+<!--Yendifplayer header configuration[start]-->
+<!--******************************************************************************************-->
+<link href={{ url_for("static",filename="yendifplayer.css")}} rel="stylesheet" type="text/css">
+<script src={{ url_for("static",filename="jquery.min.js")}}></script>
+<script src={{ url_for("static",filename="yendifplayer.js")}}></script>
+<script type="text/javascript">
+ // Global configuration
+ yendifplayer.config = {
+ 	engine      : 'html5',
+	responsive  : 1,
+	ratio       : 9/18,
+	autoplay    : 1,
+	loop        : 1,
+	playbtn     : 1,
+	controlbar  : 1,
+	playpause   : 1,
+	currenttime : 1,
+	progress    : 1,
+	duration    : 1,
+	volumebtn   : 1,
+	fullscreen  : 1,
+	embed       : 1,
+	keyboard    : 1
+ }
+</script>
+<!--******************************************************************************************-->
+<!--Yendifplayer header configuration[enf]-->
+<!--******************************************************************************************-->
+<style type="text/css">
+html, body {
+	width:100%;
+	background-color:#222;
+	margin:0 auto;
+	color:#999;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+h2 {
+	color:#EEE;
+}
+h2, h3 {
+	margin:25px auto;
+	font-weight:normal;
+	text-align:center;
+}
+h3 a {
+	color:#DDD;
+}
+.main {
+	display:block;
+	width:60%;
+	margin:0 auto;
+	padding:0;
+}
+.yendifplayer {
+	-webkit-box-shadow:0 45px 20px -40px #000;
+	-moz-box-shadow:0 45px 20px -40px #000;
+	box-shadow:0 45px 20px -40px #000;
+}
+.footer {
+	width:100%;
+	margin:0 auto;
+	padding:10px 0px;
+}
+.footer ul, .footer p {
+	margin:7px 0;
+	padding:0;
+	text-align:center;
+}
+.footer ul li {
+	display:inline-block;
+	list-style:none;
+	font-size:12px;
+	margin:0px 3px;
+}
+.footer ul li a {
+	color:#CCC;
+}
+.footer p {
+	font-size:11px;
+}
+</style>
+</head>
+<body>
+<h2>Welcome to dyketech files video !</h2>
+<div class="main">
+  <div class="yendifplayer">
+    <video poster="http://yendifplayer.com/videos/sampleOne.jpg">
+        <source type="video/mp4" src="static/files/{{ videos[0] }}">
+      <track src="subtitles.vtt">
+    </video>
+  </div>
+</div>
+
+
+{% for i in range(file_numbers) %}
+<a href="javascript:void()" onclick="playvideo('{{videos[i] }}')">{{videos[i] }}</a>
+{% endfor %}
+
+
+
+<!--
+<div class="footer">
+  <ul>
+    <li><a href="http://yendifplayer.com/faq.html" target="_blank">FAQ</a></li>
+    <li><a href="http://yendifplayer.com/license.html" target="_blank">License</a></li>
+    <li><a href="http://yendifplayer.com/terms-of-use.html" target="_blank">Terms of Use</a></li>
+  </ul>
+  <p></p>
+</div>
+-->
+<script>
+function playvideo(song){
+    $("video").attr('src','static/files/'+song);
+}
+</script>
+</body>
+</html>
