@@ -7,6 +7,8 @@
 <!--Yendifplayer header configuration[start]-->
 <!--******************************************************************************************-->
 <link href={{ url_for("static",filename="yendifplayer.css")}} rel="stylesheet" type="text/css">
+<link href={{ url_for("static",filename="animate.css")}} rel="stylesheet" type="text/css">
+
 <script src={{ url_for("static",filename="jquery.min.js")}}></script>
 <script src={{ url_for("static",filename="yendifplayer.js")}}></script>
 <script type="text/javascript">
@@ -88,7 +90,7 @@ h3 a {
 </head>
 <body>
 <h2>Welcome to dyketech files video !</h2>
-<div class="main">
+<div class="main animated shake rubberBand">
   <div class="yendifplayer">
     <video poster="http://yendifplayer.com/videos/sampleOne.jpg">
         <source type="video/mp4" src="static/files/{{ videos[0] }}">
